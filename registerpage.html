@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+            background-image: url('login.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .signup-container {
+            width: 300px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 100px auto;
+            padding: 20px;
+        }
+
+        .signup-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .signup-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .signup-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .signup-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body ng-app="signupApp" ng-controller="SignupController">
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <script>
+            var app = angular.module('signupApp', []);
+
+            app.controller('SignupController', function ($scope) {
+                $scope.validateForm = function () {
+                    // General username validation
+                    var username = /^[A-Z][a-zA-Z]{5,}$/;
+                    if (!$scope.username.match(username)) {
+                        alert("Please enter a valid username");
+                        return false;
+                    }
+
+                    // Password validation for 8 characters with at least one capital letter and one special character
+                    var passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&])[A-Za-z0-9!@#$%^&]{8,}$/;
+                    if (!$scope.password.match(passwordPattern)) {
+                        alert("Password must be 8 characters with at least one capital letter and one special character");
+                        return false;
+                    }
+
+                    return true; // Allow form submission if all checks pass
+                };
+            });
+        </script>
+
+        <div class="signup-form">
+            <form method="POST" action="reg.php" ng-submit="validateForm()">
+                Username: <input type="text" placeholder="Username" id="username" name="username" ng-model="username" required><br><br>
+                Password:  <input type="password" placeholder="Password" id="password" name="password" ng-model="password" required><br>
+                <button type="submit">Sign up</button>
+                <p>Already have an account? <a href="login.php" style="color: aqua;">Login</a></p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
